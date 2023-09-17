@@ -59,9 +59,16 @@ vendor/                  contains dependent 3rd-party packages
 environments/            contains environment-based overrides
 ```
 
-Steps to install Yii2:
+## Steps to install Yii2:
 
 1. Install via command: ```composer create-project --prefer-dist yiisoft/yii2-app-advanced yii-application```
 2. Init : ```php init```
 3. Create DB and update **common/config/main-local.php**
 4. Run migration ```php yii migrate```
+
+## Useful commands:
+
+## Migration:
+* Run migration ```php yii migrate```
+* Revert last migration ```yii migrate/redo```
+* Refresh migration ```yii migrate/fresh ```
