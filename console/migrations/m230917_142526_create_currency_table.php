@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%currency}}`.
  */
-class m231006_021504_create_currency_table extends Migration
+class m230917_142526_create_currency_table extends Migration
 {
     /**
      * {@inheritdoc}
