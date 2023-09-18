@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var app\models\CurrencyValues $model */
+/** @var array $currency_list */
 
 $this->title = 'Update Currency Values: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Currency Values', 'url' => ['index']];
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'currency_list' => $currency_list,
     ]) ?>
 
 </div>
