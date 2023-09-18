@@ -19,6 +19,9 @@ class m230917_142527_create_currency_values_table extends Migration
             'nominal' => $this->integer()->notNull()->defaultValue(1),
             'rate' => $this->float(7)->notNull(),
             'v_unit_rate' => $this->float(7)->notNull(),
+
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
         ]);
 
         // creates index for column `author_id`
