@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%currency_values}}`.
+ * Handles the creation of table `{{%currency-values}}`.
  */
 class m230917_142527_create_currency_values_table extends Migration
 {
@@ -12,7 +12,7 @@ class m230917_142527_create_currency_values_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('{{%currency_values}}', [
+        $this->createTable('{{%currency-values}}', [
             'id' => $this->primaryKey(),
 
             'currency_id' => $this->integer()->notNull(),
@@ -26,15 +26,15 @@ class m230917_142527_create_currency_values_table extends Migration
 
         // creates index for column `author_id`
         $this->createIndex(
-            'idx-currency_values-currency_id',
-            '{{%currency_values}}',
+            'idx-currency-values-currency_id',
+            '{{%currency-values}}',
             'currency_id'
         );
 
         // add foreign key for table `user`
         $this->addForeignKey(
-            'fk-currency_values-currency_id',
-            '{{%currency_values}}',
+            'fk-currency-values-currency_id',
+            '{{%currency-values}}',
             'currency_id',
             '{{%currency}}',
             'id',
@@ -50,16 +50,16 @@ class m230917_142527_create_currency_values_table extends Migration
     {
         // drops foreign key for table `user`
         $this->dropForeignKey(
-            'fk-currency_values-currency_id',
-            '{{%currency_values}}'
+            'fk-currency-values-currency_id',
+            '{{%currency-values}}'
         );
 
         // drops index for column `author_id`
         $this->dropIndex(
-            'idx-currency_values-currency_id',
-            '{{%currency_values}}'
+            'idx-currency-values-currency_id',
+            '{{%currency-values}}'
         );
 
-        $this->dropTable('{{%currency_values}}');
+        $this->dropTable('{{%currency-values}}');
     }
 }

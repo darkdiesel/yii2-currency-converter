@@ -1,9 +1,10 @@
 <?php
 
-namespace app\controllers;
+namespace backend\controllers;
 
-use app\models\CurrencyValues;
-use app\models\CurrencyValuesSearch;
+use backend\models\CurrencyValues;
+use backend\models\Currency;
+use backend\models\CurrencyValuesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -69,6 +70,9 @@ class CurrencyValuesController extends Controller
     {
         $model = new CurrencyValues();
 
+        // get currency list
+        $currency_list = $this->getCurrencyList();
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -79,6 +83,7 @@ class CurrencyValuesController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'currency_list' => $currency_list
         ]);
     }
 
@@ -93,12 +98,16 @@ class CurrencyValuesController extends Controller
     {
         $model = $this->findModel($id);
 
+        // get currency list
+        $currency_list = $this->getCurrencyList();
+
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'currency_list' => $currency_list
         ]);
     }
 
@@ -130,5 +139,17 @@ class CurrencyValuesController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function getCurrencyList(){
+        $currency_list = [];
+
+        // get currency list
+        $currency = new Currency();
+        foreach ($currency->find()->all() as $currency) {
+            $currency_list[$currency->id] = sprintf('%s (%s)', $currency->chart_code, $currency->name);
+        }
+
+        return $currency_list;
     }
 }

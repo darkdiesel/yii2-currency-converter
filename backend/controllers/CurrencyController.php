@@ -1,17 +1,17 @@
 <?php
 
-namespace app\controllers;
+namespace backend\controllers;
 
-use app\models\Currency;
-use app\models\CurrencySearch;
+use backend\models\Currency;
+use backend\models\CurrencySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CurencyController implements the CRUD actions for Currency model.
+ * CurrencyController implements the CRUD actions for Currency model.
  */
-class CurencyController extends Controller
+class CurrencyController extends Controller
 {
     /**
      * @inheritDoc
@@ -70,6 +70,8 @@ class CurencyController extends Controller
         $model = new Currency();
 
         if ($this->request->isPost) {
+
+
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }

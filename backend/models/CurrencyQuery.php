@@ -1,8 +1,8 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
-use models\Currency;
+use backend\models\Currency;
 
 /**
  * This is the ActiveQuery class for [[Currency]].
