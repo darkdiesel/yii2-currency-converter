@@ -64,10 +64,19 @@ class Currency extends \yii\db\ActiveRecord
     /**
      * Gets query for [[CurrencyValues]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|CurrencyValuesQuery
      */
     public function getCurrencyValues()
     {
         return $this->hasMany(CurrencyValues::class, ['currency_id' => 'id']);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return CurrencyQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new CurrencyQuery(get_called_class());
     }
 }

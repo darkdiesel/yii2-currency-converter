@@ -12,6 +12,8 @@ use Yii;
  * @property int $nominal
  * @property float $rate
  * @property float $v_unit_rate
+ * @property int $created_at
+ * @property int $updated_at
  *
  * @property Currency $currency
  */
@@ -31,8 +33,8 @@ class CurrencyValues extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['currency_id', 'rate', 'v_unit_rate'], 'required'],
-            [['currency_id', 'nominal'], 'integer'],
+            [['currency_id', 'rate', 'v_unit_rate', 'created_at', 'updated_at'], 'required'],
+            [['currency_id', 'nominal', 'created_at', 'updated_at'], 'integer'],
             [['rate', 'v_unit_rate'], 'number'],
             [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::class, 'targetAttribute' => ['currency_id' => 'id']],
         ];
@@ -49,16 +51,27 @@ class CurrencyValues extends \yii\db\ActiveRecord
             'nominal' => 'Nominal',
             'rate' => 'Rate',
             'v_unit_rate' => 'V Unit Rate',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 
     /**
      * Gets query for [[Currency]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|CurrencyQuery
      */
     public function getCurrency()
     {
         return $this->hasOne(Currency::class, ['id' => 'currency_id']);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return CurrencyValuesQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new CurrencyValuesQuery(get_called_class());
     }
 }
