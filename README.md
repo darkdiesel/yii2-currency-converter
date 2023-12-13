@@ -66,6 +66,28 @@ environments/            contains environment-based overrides
 3. Create DB and update **common/config/main-local.php**
 4. Run migration ```php yii migrate```
 
+## Steps to run application:
+
+1. Use docker or setup 2 hosts `admin` to `/backend/web` and `front` to `frontend/web`
+2. Open site with browser and go to sign up page.
+3. Fill fields and create user.
+4. Go to `frontend\runtime\mail\` and open `*.eml file`
+5. Copy confirm url from file and made some next modification to it:
+   - for example we have next url: 
+   ```
+    http://currency-converter.loc/index.p=
+    hp?r=3Dsite%2Fverify-email&amp;token=3DL13CX6Fro9E_MYdJ8gGRK_0GCleoRpBa_170=
+    2598408
+   ```
+- delete soft line breaks ‘=’ and newlines to create a single line with the line below
+- change ‘=3D’ to ‘=’ // after r and after token
+- change ‘&amp;‘ to '&'
+- change ‘%2F‘ to ‘/‘
+- and we have `http://currency-converter.loc/index.php?r=site/verify-email&token=3DL13CX6Fro9E_MYdJ8gGRK_0GCleoRpBa_1702598408`
+- put this url to browser and if everything is ok your user will be verified  
+6. Go to currencies page and click refresh button to download last data
+7. Go to front site, click Currency converter main menu link and you will see widget
+
 ## Useful commands:
 
 ## Migration:
