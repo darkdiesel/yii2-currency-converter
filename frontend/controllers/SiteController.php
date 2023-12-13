@@ -256,4 +256,10 @@ class SiteController extends Controller
             'model' => $model
         ]);
     }
+
+    public function actionCurrencyConverter(){
+        return $this->render('currencyConverter', [
+        ]);
+
+    }
 }
