@@ -8,6 +8,7 @@ use backend\models\CurrencyValuesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use \Datetime;
 
 /**
  * CurrencyValuesController implements the CRUD actions for CurrencyValues model.
@@ -70,16 +71,23 @@ class CurrencyValuesController extends Controller
     {
         $model = new CurrencyValues();
 
-        // get currency list
-        $currency_list = $this->getCurrencyList();
-
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+
+                //@TODO: move to behaviours
+                $currency_value_date = new DateTime();
+                $currency_value_date->createFromFormat('d/m/Y', $model->date);
+                $model->date = $currency_value_date->format('Y-m-d');
+
+                if ($model->save())
+                    return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
         }
+
+        // get currency list
+        $currency_list = $this->getCurrencyList();
 
         return $this->render('create', [
             'model' => $model,

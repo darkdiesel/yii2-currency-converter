@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use backend\models\Currency;
 
 /**
- * CurrencySearch represents the model behind the search form of `app\models\Currency`.
+ * CurrencySearch represents the model behind the search form of `backend\models\Currency`.
  */
 class CurrencySearch extends Currency
 {

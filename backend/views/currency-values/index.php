@@ -1,13 +1,14 @@
 <?php
 
-use app\models\CurrencyValues;
+use backend\models\Currency;
+use backend\models\CurrencyValues;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var app\models\CurrencyValuesSearch $searchModel */
+/** @var backend\models\CurrencyValuesSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Currency Values';
@@ -30,10 +31,24 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'currency_id',
+            [
+                'attribute' => 'currency_id',
+                'label' => 'Currency [ID]',
+                'value' => function ($model, $key, $index, $column) {
+                    if ($model->currency_id){
+                        //@TODO: get with relations
+                        $currency = Currency::findOne($model->currency_id);
+
+                        return sprintf('%s [id:%s]', $currency->name, $model->currency_id);
+                    } else {
+                        return "null";
+                    }
+                }
+            ],
             'nominal',
             'rate',
             'v_unit_rate',
+            'date',
             //'created_at',
             //'updated_at',
             [

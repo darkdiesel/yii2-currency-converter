@@ -25,7 +25,7 @@ class CurrencyValues extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'currency_values';
+        return 'currency-values';
     }
 
     /**
@@ -44,9 +44,10 @@ class CurrencyValues extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['currency_id', 'rate', 'v_unit_rate', 'created_at'], 'required'],
+            [['currency_id', 'rate', 'v_unit_rate', 'date'], 'required'],
             [['currency_id', 'nominal', 'created_at', 'updated_at'], 'integer'],
-            [['rate', 'v_unit_rate'], 'number'],
+            [['rate', 'v_unit_rate'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
+            [['date'], 'date', 'format' => 'php:Y-m-d'],
             [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::class, 'targetAttribute' => ['currency_id' => 'id']],
         ];
     }
@@ -62,6 +63,7 @@ class CurrencyValues extends \yii\db\ActiveRecord
             'nominal' => 'Nominal',
             'rate' => 'Rate',
             'v_unit_rate' => 'V Unit Rate',
+            'date' => 'Date',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

@@ -4,9 +4,12 @@ namespace backend\controllers;
 
 use backend\models\Currency;
 use backend\models\CurrencySearch;
+use backend\models\CurrencyValues;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\httpclient\Client;
+use \Datetime;
 
 /**
  * CurrencyController implements the CRUD actions for Currency model.
@@ -70,8 +73,6 @@ class CurrencyController extends Controller
         $model = new Currency();
 
         if ($this->request->isPost) {
-
-
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -114,6 +115,54 @@ class CurrencyController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    public function actionRefresh(){
+        $current_date = new DateTime();
+
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod('GET')
+            ->setUrl('http://www.cbr.ru/scripts/XML_daily.asp?date_req='.$current_date->format('d/m/Y'))
+            ->send();
+        if ($response->isOk) {
+            $data = $response->getData();
+
+            if (!isset($data['Valute']))
+                return $this->redirect(['index']);
+
+            foreach ($data['Valute'] as $currency) {
+                // check if currency not exist then create new
+                if (($currency_model = Currency::findOne(['currency_id' => $currency['@attributes']['ID']])) == null) {
+                    $currency_model = new Currency();
+                }
+
+                // or not update on every refresh
+                $currency_model->currency_id = $currency['@attributes']['ID'];
+                $currency_model->num_code = $currency['NumCode'];
+                $currency_model->chart_code = $currency['CharCode'];
+                $currency_model->name = $currency['Name'];
+
+                $currency_model->save();
+
+
+                if (($currency_value_model = CurrencyValues::findOne(['currency_id' => $currency_model->id, 'date' => $current_date->format('Y-m-d')])) == null) {
+                    $currency_value_model = new CurrencyValues();
+                }
+
+                $currency_value_model->currency_id = $currency_model->id;
+                $currency_value_model->nominal = $currency['Nominal'];
+                $currency_value_model->rate = str_replace(",", ".", $currency['Value']); //@TODO: move to behaviours
+                $currency_value_model->v_unit_rate = str_replace(",", ".", $currency['VunitRate']); //@TODO: move to behaviours
+                $currency_value_model->date = $current_date->format('Y-m-d');
+
+                $t = $currency_value_model->save();
+
+                //echo $currency['CharCode'];
+            }
+        }
 
         return $this->redirect(['index']);
     }

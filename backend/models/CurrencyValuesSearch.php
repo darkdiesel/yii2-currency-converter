@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use backend\models\CurrencyValues;
 
 /**
- * CurrencyValuesSearch represents the model behind the search form of `app\models\CurrencyValues`.
+ * CurrencyValuesSearch represents the model behind the search form of `backend\models\CurrencyValues`.
  */
 class CurrencyValuesSearch extends CurrencyValues
 {
@@ -19,6 +19,7 @@ class CurrencyValuesSearch extends CurrencyValues
         return [
             [['id', 'currency_id', 'nominal', 'created_at', 'updated_at'], 'integer'],
             [['rate', 'v_unit_rate'], 'number'],
+            [['date'], 'date'],
         ];
     }
 
@@ -63,6 +64,7 @@ class CurrencyValuesSearch extends CurrencyValues
             'nominal' => $this->nominal,
             'rate' => $this->rate,
             'v_unit_rate' => $this->v_unit_rate,
+            'date' => $this->date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

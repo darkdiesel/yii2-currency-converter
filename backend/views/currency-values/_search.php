@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\CurrencyValuesSearch $model */
+/** @var backend\models\CurrencyValuesSearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -24,6 +24,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'rate') ?>
 
     <?= $form->field($model, 'v_unit_rate') ?>
+
+    <?= $form->field($model, 'date') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 

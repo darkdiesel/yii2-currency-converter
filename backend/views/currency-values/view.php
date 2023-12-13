@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'nominal',
             'rate',
             'v_unit_rate',
+            'date',
             'created_at',
             'updated_at',
         ],

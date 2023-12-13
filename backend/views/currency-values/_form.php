@@ -2,11 +2,14 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+//use kartik\form\ActiveForm;
+use kartik\date\DatePicker;
 
 /** @var yii\web\View $this */
 /** @var backend\models\CurrencyValues $model */
 /** @var array $currency_list */
 /** @var yii\widgets\ActiveForm $form */
+
 ?>
 
 <div class="currency-values-form">
@@ -21,7 +24,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'v_unit_rate')->textInput() ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+    <?php
+        $current_date = new DateTime();
+    ?>
+
+    <?= $form->field($model, 'date')->widget(DatePicker::class, [
+        'options' => ['placeholder' => 'Enter date ...', ],
+        'name' => 'date',
+        'value' => $current_date->format('d/m/Y'),
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'dd/mm/yyyy'
+        ]
+    ]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
