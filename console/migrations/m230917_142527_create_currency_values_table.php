@@ -20,6 +20,8 @@ class m230917_142527_create_currency_values_table extends Migration
             'rate' => $this->float(7)->notNull(),
             'v_unit_rate' => $this->float(7)->notNull(),
 
+            'date' => $this->date()->notNull(),
+
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ]);
